@@ -5,8 +5,17 @@
   "repository": "https://github.com/Polymer/gen-typescript-declarations.git",
   "author": "Justin Fagnani <justinfagnani@google.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "tsc && mocha -u tdd lib/test/*_test.js"
+  },
   "dependencies": {
     "escodegen": "^1.8.1",
     "polymer-analyzer": "next"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.35",
+    "@types/mocha": "^2.2.40",
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
   }
 }
