@@ -1,0 +1,16 @@
+<dom-module id="basic-elem">
+  <template>
+    <!-- Basic attribute binding syntax. -->
+    <div id="[[writeOnly]]"></div>
+    <div id="{{readWrite}}"></div>
+    <div id="{{readWriteCall()}}"></div>
+    <div id="{{callWithArgs(arg1, arg2)}}"></div>
+    <div id="{{callWithLiteralArg(arg1, 10)}}"></div>
+    <!-- Grouping and naming. -->
+    <custom-elem prop-one="{{foo}}" prop-two="{{bar}}"></custom-elem>
+  </template>
+  <script>
+    /** @polymerElement */
+    class BasicElem { static get is() { return 'basic-elem' } };
+  </script>
+</dom-module>
