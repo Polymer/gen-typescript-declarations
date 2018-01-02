@@ -351,7 +351,7 @@ declare namespace Polymer {
      * @param selector Selector to run.
      * @returns First effective child node that matches selector.
      */
-    queryEffectiveChildren(selector: string): any;
+    queryEffectiveChildren(selector: string): Node|null;
 
     /**
      * Returns a list of effective childNodes within this element that
