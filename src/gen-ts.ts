@@ -88,7 +88,9 @@ function analyzerToAst(
   const declarationDocs = new Map<string, analyzer.Document[]>();
   for (const jsDoc of analysis.getFeatures({kind: 'js-document'})) {
     const sourcePath = analyzerUrlToRelativePath(jsDoc.url, rootDir);
-    if (sourcePath === '') {
+    if (sourcePath === undefined) {
+      console.warn(
+          `Skipping source document without local file URL: ${jsDoc.url}`);
       continue;
     }
     if (exclude.some((r) => r.match(sourcePath))) {
@@ -108,7 +110,8 @@ function analyzerToAst(
     const tsDoc = new ts.Document({
       path: declarationsFilename,
       header: makeHeader(
-          analyzerDocs.map((d) => analyzerUrlToRelativePath(d.url, rootDir))),
+          analyzerDocs.map((d) => analyzerUrlToRelativePath(d.url, rootDir))
+              .filter((url): url is string => url !== undefined)),
     });
     for (const analyzerDoc of analyzerDocs) {
       handleDocument(analyzerDoc, tsDoc, rootDir);
@@ -145,11 +148,10 @@ function analyzerToAst(
  * project root.
  */
 function analyzerUrlToRelativePath(
-    analyzerUrl: string, rootDir: string): string {
+    analyzerUrl: string, rootDir: string): string|undefined {
   const parsed = url.parse(analyzerUrl);
-  if (parsed.protocol !== 'file:' || parsed.path === undefined) {
-    console.error(`Expected valid file URL, got: ${analyzerUrl}`);
-    return '';
+  if (parsed.protocol !== 'file:' || parsed.host || !parsed.path) {
+    return undefined;
   }
   return path.relative(rootDir, parsed.path);
 }
@@ -531,7 +533,8 @@ function handleNamespace(feature: analyzer.Namespace, tsDoc: ts.Document) {
 function handleImport(
     feature: analyzer.Import, tsDoc: ts.Document, rootDir: string) {
   let sourcePath = analyzerUrlToRelativePath(feature.url, rootDir);
-  if (!sourcePath) {
+  if (sourcePath === undefined) {
+    console.warn(`Skipping HTML import without local file URL: ${feature.url}`);
     return;
   }
   // When we analyze a package's Git repo, our dependencies are installed to
