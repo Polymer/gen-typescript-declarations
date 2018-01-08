@@ -1,3 +1,9 @@
+/**
+ * @template T
+ * @constructor
+ */
+function MyParameterizedType() {}
+
 class MyClass {
   no_params() { }
 
@@ -42,4 +48,9 @@ class MyClass {
   defaulted_and_optional_param(p1 = "foo", p2) { }
 
   defaulted_and_required_param(p1 = "foo", p2) { }
+
+  /**
+   * @returns {!MyParameterizedType<boolean>}
+   */
+  parameterized_return_type() { }
 }
