@@ -240,7 +240,8 @@ function convertParameterizedType(
   }
   const types = node.applications.map((application) =>
     convert(application, templateTypes));
-  return new ts.ParameterizedType(node.expression.name, ...types);
+  const name = renameMap.get(node.expression.name) || node.expression.name;
+  return new ts.ParameterizedType(name, ...types);
 }
 
 function convertUnion(
