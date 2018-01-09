@@ -519,7 +519,7 @@ export class ParameterizedType {
   itemTypes: Type[];
   name: string;
 
-  constructor(name: string, ...itemTypes: Type[]) {
+  constructor(name: string, itemTypes: Type[]) {
     this.name = name;
     this.itemTypes = itemTypes;
   }

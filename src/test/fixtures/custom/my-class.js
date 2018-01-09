@@ -1,9 +1,3 @@
-/**
- * @template T
- * @constructor
- */
-function MyParameterizedType() {}
-
 class MyClass {
   no_params() { }
 

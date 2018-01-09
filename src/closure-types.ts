@@ -241,7 +241,7 @@ function convertParameterizedType(
   const types = node.applications.map((application) =>
     convert(application, templateTypes));
   const name = renameMap.get(node.expression.name) || node.expression.name;
-  return new ts.ParameterizedType(name, ...types);
+  return new ts.ParameterizedType(name, types);
 }
 
 function convertUnion(
@@ -317,8 +317,7 @@ function isParameterizedArray(node: doctrine.Type):
 
 function isParameterizedType(node: doctrine.Type):
     node is doctrine.type.TypeApplication {
-  return node.type === 'TypeApplication' &&
-      node.expression.type === 'NameExpression';
+  return node.type === 'TypeApplication';
 }
 
 function isBareArray(node: doctrine.Type):
