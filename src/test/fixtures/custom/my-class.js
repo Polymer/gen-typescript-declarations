@@ -47,4 +47,9 @@ class MyClass {
    * @returns {!MyParameterizedType<boolean>}
    */
   parameterized_return_type() { }
+
+  /**
+   * @returns {!Array<!NodeList<!Node>|!HTMLCollection<!HTMLElement>>}
+   */
+  renamed_collection_return_types() { }
 }

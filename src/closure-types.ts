@@ -193,6 +193,14 @@ const renameMap = new Map<string, string>([
   ['ITemplateArray', 'TemplateStringsArray'],
 ]);
 
+/*
+ * As above but only applicable when parameterized (`Foo<T>`)
+ */
+const parameterizedRenameMap = new Map<string, string>([
+  ['HTMLCollection', 'HTMLCollectionOf'],
+  ['NodeList', 'NodeListOf'],
+]);
+
 /**
  * Return whether the given AST node is an expression that is nullable by
  * default in the Closure type system.
@@ -240,7 +248,9 @@ function convertParameterizedType(
   }
   const types = node.applications.map((application) =>
     convert(application, templateTypes));
-  const name = renameMap.get(node.expression.name) || node.expression.name;
+  const name = renameMap.get(node.expression.name) ||
+    parameterizedRenameMap.get(node.expression.name) ||
+    node.expression.name;
   return new ts.ParameterizedType(name, types);
 }
 
