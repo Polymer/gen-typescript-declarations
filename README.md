@@ -32,7 +32,7 @@ class MyElement extends Polymer.Element {
 
 Alternatively, you can add the dependency to `tsconfig.json` in the root of your project:
 
-```json
+```javascript
 {
 ...
 	"include": [
