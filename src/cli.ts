@@ -86,7 +86,7 @@ async function run(argv: string[]) {
   }
 
   const fileMap = await generateDeclarations(args.root, config);
-  console.log('Writing type declarations to ' + path.resolve(args.outDir));
+  console.log('Writing type declarations to', path.resolve(args.outDir));
   await writeFileMap(args.outDir, fileMap);
 }
 
