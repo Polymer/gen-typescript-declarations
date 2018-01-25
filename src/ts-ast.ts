@@ -12,21 +12,21 @@
 // TODO Document classes better.
 // TODO Try to make serialization methods easier to read.
 
-export type Node = Document|TopLevel|Method|Type|Property;
+export type Node = Document|Declaration|Method|Type|Property;
 
 // An AST node that can appear directly in a document or namespace.
-export type TopLevel = Namespace|Class|Interface|Function|ConstValue;
+export type Declaration = Namespace|Class|Interface|Function|ConstValue;
 
 export class Document {
   readonly kind = 'document';
   path: string;
-  members: TopLevel[];
+  members: Declaration[];
   referencePaths: Set<string>;
   header: string;
 
   constructor(data: {
     path: string,
-    members?: TopLevel[],
+    members?: Declaration[],
     referencePaths?: Iterable<string>,
     header?: string
   }) {
@@ -78,12 +78,12 @@ export class Namespace {
   readonly kind = 'namespace';
   name: string;
   description: string;
-  members: TopLevel[];
+  members: Declaration[];
 
   constructor(data: {
     name: string,
     description?: string,
-    members?: TopLevel[],
+    members?: Declaration[],
   }) {
     this.name = data.name;
     this.description = data.description || '';
