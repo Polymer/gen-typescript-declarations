@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Emit a `const FooBehavior: object` for behaviors. This lets TypeScript know that e.g. `Polymer.AppLocalizeBehavior` is a valid symbol that could be passed, for example, to the `Polymer.mixinBehaviors` function.
 
 ## [0.3.6] - 2017-01-09
 - Support parameterized types other than `Array` and `Object`, such as `Foo<T>`.
