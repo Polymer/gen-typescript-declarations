@@ -457,8 +457,8 @@ function handleMixin(
 
 /**
  * Mixins can automatically apply other mixins, indicated by the @appliesMixin
- * annotation. However, since mixins may be applied transitively, to know the
- * full set of them we need to traverse down the tree.
+ * annotation. However, since those mixins may themselves apply other mixins, to
+ * know the full set of them we need to traverse down the tree.
  */
 function transitiveMixins(
     parentMixin: analyzer.ElementMixin,
