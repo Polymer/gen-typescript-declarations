@@ -307,7 +307,10 @@ function handleElement(feature: analyzer.Element, root: ts.Document) {
       extends: (feature.extends) ||
           (isPolymerElement(feature) ? 'Polymer.Element' : 'HTMLElement'),
       mixins: feature.mixins.map((mixin) => mixin.identifier),
-      properties: handleProperties(feature.properties.values()),
+      properties: [
+        ...handleProperties(feature.properties.values()),
+        ...generateObjectMap(feature)
+      ],
       methods: [
         ...handleMethods(feature.staticMethods.values(), {isStatic: true}),
         ...handleMethods(feature.methods.values()),
@@ -343,6 +346,7 @@ function handleElement(feature: analyzer.Element, root: ts.Document) {
     if (isPolymerElement(feature)) {
       i.extends.push('Polymer.Element');
       i.extends.push(...behaviors);
+      i.properties.push(...generateObjectMap(feature));
     }
 
     parent.members.push(i);
@@ -550,6 +554,27 @@ function handleProperties(analyzerProperties: Iterable<analyzer.Property>):
     tsProperties.push(p);
   }
   return tsProperties;
+}
+
+function generateObjectMap(feature: analyzer.Element): ts.Property[] {
+  if (!isPolymerElement(feature)) {
+    return [];
+  }
+
+  const elementReferences = feature.localIds.map(localId => {
+    return new ts.ParamType({
+      name: localId.name,
+      type: new ts.IndexType(
+          new ts.NameType('HTMLElementTagNameMap'), localId.nodeName)
+    });
+  });
+
+  if (!elementReferences.length) {
+    return [];
+  }
+
+  return [new ts.Property(
+      {name: '$', type: new ts.RecordType(elementReferences), readOnly: true})];
 }
 
 

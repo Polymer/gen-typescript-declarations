@@ -410,8 +410,9 @@ export class ConstValue {
 }
 
 // A TypeScript type expression.
-export type Type = NameType|UnionType|ArrayType|FunctionType|ConstructorType|
-    RecordType|IntersectionType|IndexableObjectType|ParamType|ParameterizedType;
+export type Type =
+    NameType|UnionType|ArrayType|FunctionType|ConstructorType|RecordType|
+    IntersectionType|IndexableObjectType|ParamType|ParameterizedType|IndexType;
 
 // string, MyClass, null, undefined, any
 export class NameType {
@@ -713,6 +714,26 @@ export class IndexableObjectType {
 
   serialize(): string {
     return `{[key: ${this.keyType.serialize()}]: ${this.valueType.serialize()}}`
+  }
+}
+
+export class IndexType {
+  readonly kind = 'index';
+  type: Type;
+  indexString: string;
+
+  constructor(type: Type, indexString: string) {
+    this.type = type;
+    this.indexString = indexString;
+  }
+
+  * traverse(): Iterable<Node> {
+    yield* this.type.traverse();
+    yield this;
+  }
+
+  serialize(): string {
+    return `${this.type.serialize()}[${JSON.stringify(this.indexString)}]`;
   }
 }
 
