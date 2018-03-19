@@ -6,6 +6,11 @@ I'm an HTML comment that contains JavaScript comments which must be escaped:
   /** More danger! */*/
 -->
 <dom-module id="my-element">
+  <template>
+    <div id="foo"></div>
+    <span id="bar"></span>
+    <my-element id="child"></my-element>
+  </template>
   <script>
     Polymer({
       is: 'my-element',

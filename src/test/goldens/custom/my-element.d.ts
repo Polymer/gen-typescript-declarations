@@ -16,6 +16,7 @@
  *   /** More danger! *\/*\/
  */
 interface MyElementElement extends Polymer.Element {
+  readonly $: {foo: HTMLElementTagNameMap["div"], bar: HTMLElementTagNameMap["span"], child: HTMLElementTagNameMap["my-element"]};
 }
 
 interface HTMLElementTagNameMap {

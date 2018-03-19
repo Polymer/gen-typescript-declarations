@@ -158,6 +158,7 @@ declare class PaperMenuButton extends Polymer.Element {
    *          
    */
   readonly contentElement: any;
+  readonly $: {trigger: HTMLElementTagNameMap["div"], dropdown: HTMLElementTagNameMap["iron-dropdown"], content: HTMLElementTagNameMap["slot"]};
 
   /**
    * If the dropdown is open when disabled becomes true, close the
