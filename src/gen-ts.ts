@@ -76,8 +76,8 @@ const defaultExclude = [
 export async function generateDeclarations(
     rootDir: string, config: Config): Promise<Map<string, string>> {
   const a = new analyzer.Analyzer({
-   urlLoader: new analyzer.FsUrlLoader(rootDir),
-    urlResolver: new analyzer.PackageUrlResolver({ packageDir: rootDir }),
+    urlLoader: new analyzer.FsUrlLoader(rootDir),
+    urlResolver: new analyzer.PackageUrlResolver({packageDir: rootDir}),
   });
   const analysis = await a.analyzePackage();
   const outFiles = new Map<string, string>();
@@ -579,7 +579,8 @@ function handleMethods(
 /**
  * Convert the given Analyzer method to the equivalent TypeScript declaration
  */
-function handleMethod(method: analyzer.Method, opts?: {isStatic?: boolean}): ts.Method {
+function handleMethod(
+    method: analyzer.Method, opts?: {isStatic?: boolean}): ts.Method {
   const m = new ts.Method({
     name: method.name,
     returns: closureTypeToTypeScript(method.return && method.return.type),
@@ -621,7 +622,8 @@ function handleMethod(method: analyzer.Method, opts?: {isStatic?: boolean}): ts.
   return m;
 }
 
-function handleConstructorMethod(method?: analyzer.Method): ts.Method|undefined {
+function handleConstructorMethod(method?: analyzer.Method): ts.Method|
+    undefined {
   if (!method) {
     return;
   }
