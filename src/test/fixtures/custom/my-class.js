@@ -63,20 +63,3 @@ class MyClass {
 
 class ExcludeThisClass {
 }
-
-/**
- * @extends MyClass
- */
-class SubClass extends MyClass {
-  /**
-   * Some description
-   * @suppress {checkTypes}
-   */
-  typed_return() { }
-  /**
-   * @param {string} p1
-   * @param {number} p2
-   * @suppress {checkTypes}
-   */
-  two_typed_params_and_typed_return(p1, p2) { }
-}

@@ -25,15 +25,3 @@ declare class MyClass {
   parameterized_return_type(): MyParameterizedType<boolean>;
   renamed_collection_return_types(): Array<NodeListOf<Node>|HTMLCollectionOf<HTMLElement>>;
 }
-
-declare class SubClass extends MyClass {
-  constructor(num: number, truth: boolean);
-
-  /**
-   * Some description
-   */
-  // @ts-ignore
-  typed_return(): void;
-  // @ts-ignore
-  two_typed_params_and_typed_return(p1: string, p2: number): void;
-}

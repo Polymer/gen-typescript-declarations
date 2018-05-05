@@ -9,6 +9,7 @@
  * rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+import * as jsdoc from 'doctrine';
 import * as minimatch from 'minimatch';
 import * as path from 'path';
 import * as analyzer from 'polymer-analyzer';
@@ -502,9 +503,6 @@ function handleClass(feature: analyzer.Class, root: ts.Document) {
   const m = new ts.Class({name});
   m.description = feature.description;
   m.properties = handleProperties(feature.properties.values());
-  if (feature.superClass) {
-    m.extends = feature.superClass.identifier;
-  }
   m.methods = [
     ...handleMethods(feature.staticMethods.values(), {isStatic: true}),
     ...handleMethods(feature.methods.values())
@@ -629,8 +627,8 @@ function handleMethod(
   return m;
 }
 
-function documentationHasSuppressTypeCheck(
-    annotation: analyzer.jsdoc.Annotation|undefined): boolean {
+function documentationHasSuppressTypeCheck(annotation: jsdoc.Annotation|
+                                           undefined): boolean {
   if (!annotation) {
     return false;
   }
